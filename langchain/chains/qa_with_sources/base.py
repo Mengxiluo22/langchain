@@ -128,10 +128,14 @@ class BaseQAWithSourcesChain(Chain, ABC):
         answer = self.combine_documents_chain.run(
             input_documents=docs, callbacks=_run_manager.get_child(), **inputs
         )
-        if re.search(r"SOURCES:\s", answer):
-            answer, sources = re.split(r"SOURCES:\s", answer)
+        # ------------bonnie
+        # if re.search(r"SOURCES:\s", answer):
+        #     answer, sources = re.split(r"SOURCES:\s", answer)
+        if re.search(r"SOURCES?:\s|Sources?:\s", answer):
+            answer, sources = re.split(r"SOURCES?:\s|Sources?:\s", answer)
         else:
             sources = ""
+        # ------------bonnie
         result: Dict[str, Any] = {
             self.answer_key: answer,
             self.sources_answer_key: sources,

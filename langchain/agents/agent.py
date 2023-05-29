@@ -831,7 +831,7 @@ class AgentExecutor(Chain):
                     callbacks=run_manager.get_child() if run_manager else None,
                     **tool_run_kwargs,
                 )
-            result.append((agent_action, observation))
+            result.append((agent_action, str(observation)))
         return result
 
     async def _atake_next_step(
